@@ -24,7 +24,7 @@ typora-root-url: C:\Users\Paradiser\Pictures\RootForTypora
 
 Window是无限数据流处理的核心，Window将一个无限的stream拆分成有限大小的”buckets”桶，我们可以在这些桶上做计算操作。
 
-![](https://lormer.cn/20200602200806.png)
+![](https://img.lormer.cn/20200602200806.png)
 
 ### 6.1.2 窗口类型
 
@@ -38,7 +38,7 @@ Window可以分成两类：
 
 将数据依据固定的窗口长度对数据进行切片。滚动窗口分配器将每个元素分配到一个指     定窗口大小的窗口中，滚动窗口有一个固定的大小，并且不会出现重叠。
 
-![](https://lormer.cn/20200602200828.png)
+![](https://img.lormer.cn/20200602200828.png)
 
 适用场景：适合做BI统计等（做每个时间段的聚合计算）
 
@@ -61,7 +61,7 @@ env.execute()
 
 滑动窗口是固定窗口的更广义的一种形式，滑动窗口由固定的窗口长度和滑动间隔组成。滑动窗口分配器将元素分配到固定长度的窗口中，与滚动窗口类似，窗口的大小由窗口大小参数来配置，另一个窗口滑动参数控制滑动窗口开始的频率。因此，滑动窗口如果滑动参数小于窗口大小的话，窗口是可以重叠的，在这种情况下元素会被分配到多个窗口中。
 
-![](https://lormer.cn/20200602200923.png)
+![](https://img.lormer.cn/20200602200923.png)
 
 适用场景：对最近一个时间段内的统计, 比如求最近1小时内每5分钟的水位变化
 
@@ -84,7 +84,7 @@ env.execute()
 
 由一系列事件组合一个指定时间长度的timeout间隙组成，类似于web应用的session， 也就是一段时间没有接收到新数据就会生成新的窗口。
 
-![](https://lormer.cn/20200602200958.png)
+![](https://img.lormer.cn/20200602200958.png)
 
 ```scala
 val env =
@@ -265,7 +265,7 @@ processDS.print()
 
 在Flink的流式处理中，会涉及到时间的不同概念，如下图所示：
 
-![](https://lormer.cn/20200601100627.png)
+![](https://img.lormer.cn/20200601100627.png)
 
 - Event Time：是事件创建的时间。
   - 它通常由事件中的时间戳描述，例如采集的日志数据中，每一条日志都会记录自己的生成时间，Flink通过时间戳分配器访问事件    时间戳。
@@ -337,15 +337,15 @@ object Flink06_Window_Time {
 
 需要传入计算基准时间
 
-![](https://lormer.cn/20200601101322.png)
+![](https://img.lormer.cn/20200601101322.png)
 
 `org.apache.flink.streaming.api.TimeCharacteristic`
 
-![](https://lormer.cn/20200601101606.png)
+![](https://img.lormer.cn/20200601101606.png)
 
-![](https://lormer.cn/20200601101640.png)
+![](https://img.lormer.cn/20200601101640.png)
 
-![](https://lormer.cn/20200601103252.png)
+![](https://img.lormer.cn/20200601103252.png)
 
 `assignAscendingTimestamps()` 有序数据时间戳
 
@@ -357,7 +357,7 @@ object Flink06_Window_Time {
 
 这里的Watermark什么意思呢？很简单，把数据流简单的理解为水流，那么当水流源源不断地流入咱们系统时，什么时候我们才知道要开始对数据计算了呢？总不能一直等吧。所以为了能够对数据计算的时间进行限定，我们的想法就是在水流上添加浮标或标记，当这个标记进入我们的数据窗口时，我们就认为可以开始计算了。这里在水流中增加的标记，我们就称之为Watermark（**水位标记/水位线/水印**）
 
-![](https://lormer.cn/20200601104259.png)
+![](https://img.lormer.cn/20200601104259.png)
 
 在实际操作中，Watermark作为特殊标记数据由Flink根据当前数据的EventTime创建出来后自动加入到数据队列中。( **时间语义设置为EventTime后 触发窗口的计算不再以时间为触发 而是以Watermark为触发**)
 
@@ -689,7 +689,7 @@ object Flink10_Window_Watermark2 {
 }
 ```
 
-![](https://lormer.cn/20200601123028.png)
+![](https://img.lormer.cn/20200601123028.png)
 
 #### 读文件时的watermark
 
@@ -766,11 +766,11 @@ object Flink12_Window_Watermark4 {
 
 读别的数据源 得到的结果是如下的 : 
 
-![](https://lormer.cn/20200601130032.png)
+![](https://img.lormer.cn/20200601130032.png)
 
 读文件  得到结果如下 :
 
-![](https://lormer.cn/20200601130444.png)
+![](https://img.lormer.cn/20200601130444.png)
 
 #### 乱序数据 分配watermark
 
@@ -1122,15 +1122,15 @@ object Flink16_Window_Watermark8 {
 
 以下演示的是有序数据来的时候的情况
 
-![](https://lormer.cn/20200601193647.png)
+![](https://img.lormer.cn/20200601193647.png)
 
-![](https://lormer.cn/20200601193718.png)
+![](https://img.lormer.cn/20200601193718.png)
 
-![](https://lormer.cn/20200601194729.png)
+![](https://img.lormer.cn/20200601194729.png)
 
 如果是乱序的数据
 
-![](https://lormer.cn/20200601195225.png)
+![](https://img.lormer.cn/20200601195225.png)
 
 > 假如是25先来 第一个分区水位线目前是22 然后第二个分区来了22 水位线是19 则整个流中的水位线按最小的19来计算
 >
@@ -1239,7 +1239,7 @@ object Flink17_Window_Watermark9 {
 }
 ```
 
-![](https://lormer.cn/20200601220352.png)
+![](https://img.lormer.cn/20200601220352.png)
 
 #### 间歇性生成watermark
 
@@ -1370,7 +1370,7 @@ env.execute("sensor")
 
 `.window(TumblingEventTimeWindows.of(Time.seconds(5)))`
 
-![](https://lormer.cn/20200602000629.png)
+![](https://img.lormer.cn/20200602000629.png)
 
 #### 滑动窗口(SlidingEventTimeWindows)
 
@@ -1410,7 +1410,7 @@ env.execute("sensor")
 
 `.timeWindow(Time.seconds(5), Time.seconds(1)))`的底层实现代码
 
-![](https://lormer.cn/20200602000504.png)
+![](https://img.lormer.cn/20200602000504.png)
 
 #### 会话窗口（EventTimeSessionWindows）
 
@@ -1446,11 +1446,11 @@ resultDS.print("result>>>>>")
 env.execute("sensor")
 ```
 
-![](https://lormer.cn/20200602000935.png)
+![](https://img.lormer.cn/20200602000935.png)
 
 `window()`函数中需要传一个WindowAssigner的实现类 实现类如下
 
-![](https://lormer.cn/20200602000903.png)
+![](https://img.lormer.cn/20200602000903.png)
 
 
 
@@ -1738,7 +1738,7 @@ object Flink21_ProcessFunction_Timer_EventTime {
 // 下图为源码分析 图片有点大 短链接为https://imgchr.com/i/tNFref
 ```
 
-![tNFref.png](https://lormer.cn/tNFref.png)
+![tNFref.png](https://img.lormer.cn/tNFref.png)
 
 
 
@@ -2226,7 +2226,7 @@ Flink内置的很多算子，数据源 source，数据存储sink都是有状态�
 
 算子状态的作用范围限定为算子任务。这意味着由同一并行任务所处理的所有数据都可以访问到相同的状态，状态对于同一任务而言是共享的。算子状态不能由相同或不同算子的另一个任务访问。
 
-![](https://lormer.cn/20200602192103.png)
+![](https://img.lormer.cn/20200602192103.png)
 
 Flink为算子状态提供三种基本数据结构：
 
@@ -2290,7 +2290,7 @@ Flink为每个键值维护一个状态实例，并将具有相同键的所有数
 
 Keyed State 很类似于一个分布式的 key-value map 数据结构，只能用于KeyedStream（keyBy算子处理之后）。
 
-![](https://lormer.cn/20200602192130.png)
+![](https://img.lormer.cn/20200602192130.png)
 
 Flink 的 Keyed State 支持以下数据类型：
 
@@ -2811,15 +2811,15 @@ env.setStateBackend(stateBackend)
 env.enableCheckpointing(1000, CheckpointingMode.EXACTLY_ONCE)
 ```
 
-![](https://lormer.cn/20200602225432.png)
+![](https://img.lormer.cn/20200602225432.png)
 
-![](https://lormer.cn/20200602225555.png)
+![](https://img.lormer.cn/20200602225555.png)
 
-![](https://lormer.cn/20200602225639.png)
+![](https://img.lormer.cn/20200602225639.png)
 
 StateBackEnd是一个接口 找其实现类 如下
 
-![](https://lormer.cn/20200602225342.png)
+![](https://img.lormer.cn/20200602225342.png)
 
 注意这里AbstractStateBackend是一个抽象类 StateBackend是一个接口
 
@@ -2829,9 +2829,9 @@ StateBackEnd是一个接口 找其实现类 如下
 
 会报过时提示
 
-![](https://lormer.cn/20200602225129.png)
+![](https://img.lormer.cn/20200602225129.png)
 
-![](https://lormer.cn/20200602230720.png)
+![](https://img.lormer.cn/20200602230720.png)
 
 演示代码
 
@@ -2932,7 +2932,7 @@ Flink的一个重大价值在于，它既保证了exactly-once，也具有低延
 
 所谓幂等操作，是说一个操作，可以重复执行很多次，但只导致一次结果更改，也就是说，后面再重复执行就不起作用了。(例如往hashmap中放同一个对象)
 
-![](https://lormer.cn/20200602193256.png)
+![](https://img.lormer.cn/20200602193256.png)
 
 **事务写入**
 
@@ -2946,15 +2946,15 @@ Flink的一个重大价值在于，它既保证了exactly-once，也具有低延
 
 
 
-![](https://lormer.cn/20200602193405.png)
+![](https://img.lormer.cn/20200602193405.png)
 
 DataStream API 提供了`GenericWriteAheadSink`模板类和`TwoPhaseCommitSinkFunction` 接口，可以方便地实现这两种方式的事务性写入。
 
-![](https://lormer.cn/20200602233439.png)
+![](https://img.lormer.cn/20200602233439.png)
 
-![](https://lormer.cn/20200602233309.png)
+![](https://img.lormer.cn/20200602233309.png)
 
-![](https://lormer.cn/20200603004238.png)
+![](https://img.lormer.cn/20200603004238.png)
 
 不同 Source 和 Sink 的一致性保证可以用下表说明：
 
@@ -3013,7 +3013,7 @@ keyDS.mapWithState{
 
 我们用一个图形来看检查点是如何运行的：
 
-![](https://lormer.cn/20200602193906.png)
+![](https://img.lormer.cn/20200602193906.png)
 
 > 上图中的检查点机制也可以认为是两步提交操作 各个节点向JM提交数据 (预提交)
 >
@@ -3043,27 +3043,27 @@ Flink检查点算法的正式名称是异步分界线快照(asynchronous barrier
 
 我们知道Flink由JobManager协调各个TaskManager进行checkpoint存储，checkpoint保存在 StateBackend中，默认StateBackend是内存级的，也可以改为文件级的进行持久化保存。
 
-![](https://lormer.cn/20200602193930.png)
+![](https://img.lormer.cn/20200602193930.png)
 
 当 checkpoint 启动时，JobManager 会将检查点分界线（barrier）注入数据流；barrier会在算子间传递下去。
 
-![](https://lormer.cn/20200602193949.png)
+![](https://img.lormer.cn/20200602193949.png)
 
 每个算子会对当前的状态做个快照，保存到状态后端。对于source任务而言，就会把当前的offset作为状态保存起来。下次从checkpoint恢复时，source任务可以重新提交偏移量，从上次保存的位置开始重新消费数据。
 
-![](https://lormer.cn/20200602194017.png)
+![](https://img.lormer.cn/20200602194017.png)
 
 每个内部的 transform 任务遇到 barrier 时，都会把状态存到 checkpoint 里。
 
 sink 任务首先把数据写入外部 kafka，这些数据都属于预提交的事务（还不能被消费）；当遇到 barrier 时，把状态保存到状态后端，并开启新的预提交事务。
 
-![](https://lormer.cn/20200602194040.png)
+![](https://img.lormer.cn/20200602194040.png)
 
 当所有算子任务的快照完成，也就是这次的 checkpoint 完成时，JobManager 会向所有任务发通知，确认这次 checkpoint 完成。
 
 当sink任务收到确认通知，就会正式提交之前的事务，kafka 中未确认的数据就改为“已确认”，数据就真正可以被消费了。
 
-![](https://lormer.cn/20200602194116.png)
+![](https://img.lormer.cn/20200602194116.png)
 
 所以我们看到，执行过程实际上是一个两段式提交，每个算子执行完成，会进行“预提交”，直到执行完sink操作，会发起“确认提交”，如果执行失败，预提交会放弃掉。
 
@@ -3156,7 +3156,7 @@ CAP理论认为，任何联网的共享数据系统智能实现三个属性中�
 
   参与者在接收到协调者发来的消息后将执行响应的操作
 
-![](https://lormer.cn/20200603005319.png)
+![](https://img.lormer.cn/20200603005319.png)
 
 ###### **2.两阶段提交的缺点**
 
@@ -3198,7 +3198,7 @@ CAP理论认为，任何联网的共享数据系统智能实现三个属性中�
 
 三阶段提交协议在协调者和参与者中都引入超时机制，并且把两阶段提交协议的第一个阶段分成了两步: 询问，然后再锁资源，最后真正提交。
 
-![](https://lormer.cn/20200603005539.png)
+![](https://img.lormer.cn/20200603005539.png)
 
 ###### **2.三阶段的执行**
 
